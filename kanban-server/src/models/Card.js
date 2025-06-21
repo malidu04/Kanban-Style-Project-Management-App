@@ -1,34 +1,46 @@
 const mongoose = require('mongoose');
 
-const CardSchema = new mongoose.Schema({
+const CardSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: [true, 'Card title is required'],
+      trim: true,
     },
     description: {
-        type: String
+      type: String,
+      trim: true,
     },
     list: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'List'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List',
+      required: true,
+      index: true,
     },
     board: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Board'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Board',
+      required: true,
+      index: true,
     },
-    assignees: [{
+    assignees: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
+        ref: 'User',
+      },
+    ],
     dueDate: {
-        type: Date
+      type: Date,
+      index: true, // if you want to filter/sort by due dates often
     },
     labels: [
-        {
-            type: String
-        }
+      {
+        type: String,
+        trim: true,
+      },
     ],
-}, { timestamps: true });
-
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('Card', CardSchema);

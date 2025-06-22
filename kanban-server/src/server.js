@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './src/config/.env' });
+require('dotenv').config({ path: './config/.env' });
 const http = require('http');
 const express = require('express');
 const cors = require('cors');
